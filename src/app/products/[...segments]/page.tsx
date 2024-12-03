@@ -9,12 +9,11 @@ import PriceInfoCard from "../../../../components/PriceInfoCard";
 import ProductCard from "../../../../components/ProductCard";
 import Modal from "../../../../components/Modal";
 
-interface PageProps {
-  params?: { segments: string[] };
-  searchParams?: Promise<any>;
-}
-
-export default async function page({ params }: PageProps) {
+export default async function page({
+  params,
+}: {
+  params: { segments: string[] };
+}) {
   const product: Product = await getProductById(params?.segments?.[0] || "0");
 
   if (!product) redirect("/");
