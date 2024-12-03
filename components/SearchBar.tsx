@@ -29,7 +29,7 @@ function SearchBar() {
     if (!isValid) alert("Please provide a valid amazon link");
     try {
       setLoading(true);
-      const product = await scrapeAndStoreProduct(searchValue);
+      scrapeAndStoreProduct(searchValue);
     } catch (error) {
       console.error(error);
     } finally {

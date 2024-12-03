@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -8,16 +9,19 @@ import PriceInfoCard from "../../../../components/PriceInfoCard";
 import ProductCard from "../../../../components/ProductCard";
 import Modal from "../../../../components/Modal";
 
-type Props = {
-  params: { id: string };
-};
+interface PageProps {
+  params?: { segments: string[] };
+  searchParams?: Promise<any>;
+}
 
-const ProductDetails = async ({ params: { id } }: Props) => {
-  const product: Product = await getProductById(id);
+export default async function page({ params }: PageProps) {
+  const product: Product = await getProductById(params?.segments?.[0] || "0");
 
   if (!product) redirect("/");
 
-  const similarProducts = await getSimilarProducts(id);
+  const similarProducts = await getSimilarProducts(
+    params?.segments?.[0] || "0"
+  );
 
   return (
     <div className="product-container">
@@ -201,6 +205,4 @@ const ProductDetails = async ({ params: { id } }: Props) => {
       )}
     </div>
   );
-};
-
-export default ProductDetails;
+}
